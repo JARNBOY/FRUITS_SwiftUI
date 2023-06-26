@@ -14,49 +14,98 @@ struct FruitDetailView: View {
     
     // MARK: - BODY
     var body: some View {
-        NavigationView {
-            ScrollView(.vertical ,showsIndicators: false) {
-                
-                VStack(alignment: .center, spacing: 20) {
-                    // HEADER
-                    FruitHeaderView(fruit: fruit)
+        if #available(iOS 16.0, *) {
+            NavigationStack {
+                ScrollView(.vertical ,showsIndicators: false) {
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        // TITLE
-                        Text(fruit.title)
-                          .font(.largeTitle)
-                          .fontWeight(.heavy)
-                          .foregroundColor(fruit.gradientColors[1])
+                    VStack(alignment: .center, spacing: 20) {
+                        // HEADER
+                        FruitHeaderView(fruit: fruit)
                         
-                        // HEADLINE
-                        Text(fruit.headline)
-                          .font(.headline)
-                          .multilineTextAlignment(.leading)
+                        VStack(alignment: .leading, spacing: 20) {
+                            // TITLE
+                            Text(fruit.title)
+                              .font(.largeTitle)
+                              .fontWeight(.heavy)
+                              .foregroundColor(fruit.gradientColors[1])
+                            
+                            // HEADLINE
+                            Text(fruit.headline)
+                              .font(.headline)
+                              .multilineTextAlignment(.leading)
+                            
+                            // NUTRIENTS
+                            FruitNutrientsView(fruit: fruit)
+                            
+                            // SUBHEADLINE
+                            Text("Learn more about \(fruit.title)".uppercased())
+                              .fontWeight(.bold)
+                              .foregroundColor(fruit.gradientColors[1])
+                            
+                            // DESCRIPTION
+                            Text(fruit.description)
+                              .multilineTextAlignment(.leading)
+                            
+                            // LINK
+                            SourceLinkView()
+                        }//: VStack
+                        .padding(.horizontal, 20)
+                        .frame(maxWidth: 640, alignment: .center)
                         
-                        // NUTRIENTS
-                        FruitNutrientsView(fruit: fruit)
-                        
-                        // SUBHEADLINE
-                        Text("Learn more about \(fruit.title)".uppercased())
-                          .fontWeight(.bold)
-                          .foregroundColor(fruit.gradientColors[1])
-                        
-                        // DESCRIPTION
-                        Text(fruit.description)
-                          .multilineTextAlignment(.leading)
-                        
-                        // LINK
-                        SourceLinkView()
                     }//: VStack
-                    .padding(.horizontal, 20)
-                    .frame(maxWidth: 640, alignment: .center)
+                    .navigationBarTitle(fruit.title, displayMode: .inline)
+                    .navigationBarHidden(true)
+                }//: ScrollView
+                .edgesIgnoringSafeArea(.top)
+            }
+            
+        } else {
+            NavigationView {
+                ScrollView(.vertical ,showsIndicators: false) {
                     
-                }//: VStack
-                .navigationBarTitle(fruit.title, displayMode: .inline)
-                .navigationBarHidden(true)
-            }//: ScrollView
-            .edgesIgnoringSafeArea(.top)
-        }//: NavigationView
+                    VStack(alignment: .center, spacing: 20) {
+                        // HEADER
+                        FruitHeaderView(fruit: fruit)
+                        
+                        VStack(alignment: .leading, spacing: 20) {
+                            // TITLE
+                            Text(fruit.title)
+                              .font(.largeTitle)
+                              .fontWeight(.heavy)
+                              .foregroundColor(fruit.gradientColors[1])
+                            
+                            // HEADLINE
+                            Text(fruit.headline)
+                              .font(.headline)
+                              .multilineTextAlignment(.leading)
+                            
+                            // NUTRIENTS
+                            FruitNutrientsView(fruit: fruit)
+                            
+                            // SUBHEADLINE
+                            Text("Learn more about \(fruit.title)".uppercased())
+                              .fontWeight(.bold)
+                              .foregroundColor(fruit.gradientColors[1])
+                            
+                            // DESCRIPTION
+                            Text(fruit.description)
+                              .multilineTextAlignment(.leading)
+                            
+                            // LINK
+                            SourceLinkView()
+                        }//: VStack
+                        .padding(.horizontal, 20)
+                        .frame(maxWidth: 640, alignment: .center)
+                        
+                    }//: VStack
+                    .navigationBarTitle(fruit.title, displayMode: .inline)
+                    .navigationBarHidden(true)
+                }//: ScrollView
+                .edgesIgnoringSafeArea(.top)
+            }//: NavigationView
+            .navigationViewStyle(.stack)
+        }
+        
         
     }
 }
