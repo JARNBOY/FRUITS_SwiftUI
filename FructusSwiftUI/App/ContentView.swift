@@ -16,56 +16,29 @@ struct ContentView: View {
     // MARK: - BODY
     
     var body: some View {
-        if #available(iOS 16.0, *) {
-            NavigationStack {
-                List {
-                    ForEach(fruits.shuffled()) { item in
-                        NavigationLink(destination: FruitDetailView(fruit: item)) {
-                          FruitRowView(fruit: item)
-                            .padding(.vertical, 4)
-                        }
+        NavigationView {
+            List {
+                ForEach(fruits.shuffled()) { item in
+                    NavigationLink(destination: FruitDetailView(fruit: item)) {
+                      FruitRowView(fruit: item)
+                        .padding(.vertical, 4)
                     }
                 }
-                .navigationTitle("Fruits")
-                .navigationBarItems(
-                  trailing:
-                    Button(action: {
-                      isShowingSettings = true
-                    }) {
-                      Image(systemName: "slider.horizontal.3")
-                    } //: BUTTON
-                    .sheet(isPresented: $isShowingSettings) {
-                      SettingsView()
-                    }
-                )
             }
-            
-        } else {
-            NavigationView {
-                List {
-                    ForEach(fruits.shuffled()) { item in
-                        NavigationLink(destination: FruitDetailView(fruit: item)) {
-                          FruitRowView(fruit: item)
-                            .padding(.vertical, 4)
-                        }
-                    }
+            .navigationTitle("Fruits")
+            .navigationBarItems(
+              trailing:
+                Button(action: {
+                  isShowingSettings = true
+                }) {
+                  Image(systemName: "slider.horizontal.3")
+                } //: BUTTON
+                .sheet(isPresented: $isShowingSettings) {
+                  SettingsView()
                 }
-                .navigationTitle("Fruits")
-                .navigationBarItems(
-                  trailing:
-                    Button(action: {
-                      isShowingSettings = true
-                    }) {
-                      Image(systemName: "slider.horizontal.3")
-                    } //: BUTTON
-                    .sheet(isPresented: $isShowingSettings) {
-                      SettingsView()
-                    }
-                )
-            }
-            .navigationViewStyle(.stack)
+            )
         }
-        
+        .navigationViewStyle(.stack)
         
     }
 }
